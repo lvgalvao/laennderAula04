@@ -18,11 +18,11 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-subgraph Extrair[Etapa de Extração]
-    A1[Ler arquivo CSV] --> A2[Gerar DataFrame com Pandas]
-    A2 --> A3[Verificar Tipos de Dados]
-    A3 --> A4[Verificar Valores Nulos]
-end
+    subgraph Extrair[Etapa de Extração]
+        A1[Ler arquivo CSV] --> A2[Gerar DataFrame com Pandas]
+        A2 --> A3[Verificar Tipos de Dados]
+        A3 --> A4[Verificar Valores Nulos]
+    end
 ```
 
 ---
@@ -31,11 +31,11 @@ end
 
 ```mermaid
 flowchart LR
-subgraph Transformar[Etapa de Transformação]
-    B1[Remover Duplicatas] --> B2[Preencher Valores Nulos]
-    B2 --> B3[Adicionar Coluna 'Mês']
-    B3 --> B4[Calcular Total de Vendas por Produto]
-end
+    subgraph Transformar[Etapa de Transformação]
+        B1[Remover Duplicatas] --> B2[Preencher Valores Nulos]
+        B2 --> B3[Adicionar Coluna 'Mês']
+        B3 --> B4[Calcular Total de Vendas por Produto]
+    end
 ```
 
 ---
