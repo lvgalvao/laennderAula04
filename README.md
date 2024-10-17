@@ -1,5 +1,29 @@
 # Aula 04 - Bootcamp de Python com Laennder
 
+Processo ETL Detalhado:
+
+```mermaid
+flowchart TD
+    A[Início] --> B[Extrair]
+    B --> C[Transformar]
+    C --> D[Carregar]
+    D --> E[Fim]
+    
+    subgraph Extrair
+    B1[Ler arquivo CSV] --> B2[Criar DataFrame Pandas]
+    end
+    
+    subgraph Transformar
+    C1[Remover Duplicatas] --> C2[Tratar Valores Nulos]
+    C2 --> C3[Adicionar Coluna Mês]
+    C3 --> C4[Calcular Total de Vendas por Produto]
+    end
+    
+    subgraph Carregar
+    D1[Preparar Dados para Saída] --> D2[Salvar como CSV Processado]
+    end
+```
+
 ## Objetivos da Aula
 
 Nesta aula, focamos em dois aspectos importantes do desenvolvimento em Python:
@@ -54,13 +78,59 @@ O script `etl_process.py` realiza as seguintes operações:
    - Calcula o total de vendas por produto
 3. Carrega os dados transformados em um novo arquivo CSV
 
-### 4. Como Executar o Projeto
+### 5. Como instalar e executar o projeto
 
-1. Certifique-se de ter o Python (versão 3.12 ou superior) e o Pandas instalados
-2. Clone este repositório
-3. Navegue até a pasta `projeto_etl/src/` no terminal
-4. Execute o comando: `python etl_process.py`
+1. Certifique-se de ter o Python (versão 3.12 ou superior) e o Git instalados em seu sistema.
 
+```bash
+python --version
+git --version
+```  
+
+2. Abra o terminal e clone o repositório:
+
+```bash
+git clone https://github.com/lvgalvao/projeto_etl.git
+cd projeto_etl
+```   
+
+3. Crie um ambiente virtual:
+
+```bash
+python -m venv .venv
+```
+
+4. Ative o ambiente virtual:
+
+No Windows:
+
+```bash
+source .venv\Scripts\activate
+```
+
+No macOS e Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+5. Instale as dependências:
+
+```bash
+pip install -r requirements.txt
+```
+
+6. Navegue até a pasta src:
+
+```bash
+cd projeto_etl
+```
+
+7. Execute o script ETL:
+
+```bash
+python etl_process.py
+```
 O script irá processar os dados do arquivo `vendas.csv` e gerar um novo arquivo `vendas_processadas.csv` na pasta `data/output/`.
 
 ### 5. Próximos Passos
