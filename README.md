@@ -1,3 +1,7 @@
+Para garantir que todos os subgrafos também sigam o fluxo **da esquerda para a direita**, você deve especificar a orientação **LR** dentro de cada subgrafo. Vou ajustar o código corretamente para cada diagrama.
+
+---
+
 # Aula 04 - Bootcamp de Python com Laennder  
 
 ## Processo ETL Detalhado  
@@ -19,6 +23,7 @@ flowchart LR
 ```mermaid
 flowchart LR
     subgraph Extrair[Etapa de Extração]
+        direction LR
         A1[Ler arquivo CSV] --> A2[Gerar DataFrame com Pandas]
         A2 --> A3[Verificar Tipos de Dados]
         A3 --> A4[Verificar Valores Nulos]
@@ -32,6 +37,7 @@ flowchart LR
 ```mermaid
 flowchart LR
     subgraph Transformar[Etapa de Transformação]
+        direction LR
         B1[Remover Duplicatas] --> B2[Preencher Valores Nulos]
         B2 --> B3[Adicionar Coluna 'Mês']
         B3 --> B4[Calcular Total de Vendas por Produto]
@@ -44,14 +50,13 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-subgraph Carregar[Etapa de Carregamento]
-    C1[Preparar Dados Processados] --> C2[Salvar em CSV Processado]
-    C2 --> C3[Salvar em Arquivo Parquet]
-    C3 --> C4[Preparar para Integração com AWS S3]
-end
+    subgraph Carregar[Etapa de Carregamento]
+        direction LR
+        C1[Preparar Dados Processados] --> C2[Salvar em CSV Processado]
+        C2 --> C3[Salvar em Arquivo Parquet]
+        C3 --> C4[Preparar para Integração com AWS S3]
+    end
 ```
-
----
 
 ## Objetivos da Aula  
 
