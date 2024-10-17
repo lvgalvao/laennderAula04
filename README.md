@@ -125,10 +125,10 @@ projeto_etl/
 
 3. **Criar e ativar um ambiente virtual**:  
 
-   **Windows:**
+   **Windows usando GitBash:**
    ```bash
    python -m venv .venv
-   source .venv\Scripts\activate
+   source .venv/Scripts/activate
    ```
 
    **macOS/Linux:**
@@ -148,7 +148,7 @@ projeto_etl/
    Navegue até a pasta `src` e rode o script:
 
    ```bash
-   cd src
+   cd etl_process
    python etl_process.py
    ```
 
