@@ -119,8 +119,8 @@ projeto_etl/
 2. **Clonar o repositório**  
 
    ```bash
-   git clone https://github.com/lvgalvao/projeto_etl.git
-   cd projeto_etl
+   git clone git@github.com:lvgalvao/laennderAula04.git
+   cd laennderAula04
    ```
 
 3. **Criar e ativar um ambiente virtual**:  
