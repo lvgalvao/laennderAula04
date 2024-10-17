@@ -1,54 +1,81 @@
-# Aula 04 - Bootcamp de Python com Laennder
+# Aula 04 - Bootcamp de Python com Laennder  
 
-Processo ETL Detalhado:
+## Processo ETL Detalhado  
+
+### Diagrama Geral do Processo ETL  
 
 ```mermaid
-flowchart LR
-    subgraph Pipeline[Pipeline ETL]
-        A[Início] --> Extrair
-        Extrair --> Transformar
-        Transformar --> Carregar
-        Carregar --> E[Fim]
-        
-        subgraph Extrair[Extrair]
-            B1[Ler arquivo CSV] --> B2[Criar DataFrame Pandas]
-        end
-        
-        subgraph Transformar[Transformar]
-            C1[Remover Duplicatas] --> C2[Tratar Valores Nulos]
-            C2 --> C3[Adicionar Coluna Mês]
-            C3 --> C4[Calcular Total de Vendas por Produto]
-        end
-        
-        subgraph Carregar[Carregar]
-            D1[Preparar Dados para Saída] --> D2[Salvar como CSV Processado]
-        end
-    end
+flowchart TD
+    A[Início] --> B[Leitura dos Dados]
+    B --> C[Transformação dos Dados]
+    C --> D[Carregamento dos Dados]
+    D --> E[Fim]
 ```
 
-## Objetivos da Aula
+---
 
-Nesta aula, focamos em dois aspectos importantes do desenvolvimento em Python:
+### **Extrair: Leitura dos Dados**  
 
-1. Criar uma ETL (Extract, Transform, Load) do zero usando Pandas
-2. Preparar o projeto para futura integração com AWS S3
-3. Revisar Git e GitHub
+```mermaid
+subgraph Extrair[Etapa de Extração]
+    A1[Ler arquivo CSV] --> A2[Gerar DataFrame com Pandas]
+    A2 --> A3[Verificar Tipos de Dados]
+    A3 --> A4[Verificar Valores Nulos]
+end
+```
 
-### 1. ETL com Pandas
+---
 
-Construímos um processo de ETL completo utilizando a biblioteca Pandas, que inclui:
+### **Transformar: Limpeza e Manipulação dos Dados**  
 
-- Extração de dados de um arquivo CSV para um DataFrame do Pandas
-- Transformação e limpeza dos dados, incluindo:
-  - Remoção de duplicatas
-  - Tratamento de valores nulos
-  - Adição de uma coluna de mês
-  - Cálculo do total de vendas por produto
-- Carregamento dos dados processados em um novo arquivo CSV
+```mermaid
+subgraph Transformar[Etapa de Transformação]
+    B1[Remover Duplicatas] --> B2[Preencher Valores Nulos]
+    B2 --> B3[Adicionar Coluna 'Mês']
+    B3 --> B4[Calcular Total de Vendas por Produto]
+end
+```
 
-### 2. Estrutura do Projeto
+---
 
-O projeto foi estruturado da seguinte forma:
+### **Carregar: Exportar os Dados**  
+
+```mermaid
+subgraph Carregar[Etapa de Carregamento]
+    C1[Preparar Dados Processados] --> C2[Salvar em CSV Processado]
+    C2 --> C3[Salvar em Arquivo Parquet]
+    C3 --> C4[Preparar para Integração com AWS S3]
+end
+```
+
+---
+
+## Objetivos da Aula  
+
+Nesta aula, o foco está em:
+
+1. **Criar uma ETL (Extract, Transform, Load) completa usando Pandas**:
+   - Extração de dados de um arquivo CSV para um DataFrame
+   - Transformação e limpeza, incluindo:
+     - Remoção de duplicatas  
+     - Tratamento de valores nulos  
+     - Adição de uma coluna com o mês da venda  
+     - Cálculo do total de vendas por produto  
+   - Carregamento dos dados em:
+     - Um novo arquivo CSV  
+     - Um arquivo **Parquet** para garantir eficiência na leitura/escrita  
+
+2. **Preparar o projeto para futura integração com AWS S3**:  
+   - Armazenamento dos arquivos CSV e Parquet na nuvem  
+   - Automação de pipelines com cloud computing  
+
+3. **Revisar conceitos de Git e GitHub**:
+   - Versionamento de código e controle de mudanças  
+   - Colaboração eficiente através de repositórios no GitHub  
+
+---
+
+## Estrutura do Projeto  
 
 ```
 projeto_etl/
@@ -57,123 +84,150 @@ projeto_etl/
 │ ├── input/
 │ │ └── vendas.csv
 │ └── output/
+│     ├── vendas_processadas.csv
+│     └── vendas_processadas.parquet
 │
 ├── src/
 │ └── etl_process.py
 │
+├── test/
+│ └── test_etl_process.py
+│
 └── README.md
 ```
 
-- `data/input/vendas.csv`: Arquivo CSV de exemplo com dados de vendas
-- `src/etl_process.py`: Script Python que realiza o processo ETL
-- `data/output/`: Diretório onde será salvo o arquivo CSV processado
+---
 
-### 3. Funcionalidades Implementadas
+## Como Instalar e Executar o Projeto  
 
-O script `etl_process.py` realiza as seguintes operações:
+1. **Verificar dependências**  
+   Certifique-se de ter **Python 3.12+** e **Git** instalados:
 
-1. Extrai dados do arquivo CSV de entrada
-2. Transforma os dados:
-   - Remove duplicatas
-   - Trata valores nulos na coluna 'quantidade' e 'valor_total'
-   - Adiciona uma coluna 'mes' baseada na data da venda
-   - Calcula o total de vendas por produto
-3. Carrega os dados transformados em um novo arquivo CSV
+   ```bash
+   python --version
+   git --version
+   ```
 
-### 5. Como instalar e executar o projeto
+2. **Clonar o repositório**  
 
-1. Certifique-se de ter o Python (versão 3.12 ou superior) e o Git instalados em seu sistema.
+   ```bash
+   git clone https://github.com/lvgalvao/projeto_etl.git
+   cd projeto_etl
+   ```
 
-```bash
-python --version
-git --version
-```  
+3. **Criar e ativar um ambiente virtual**:  
 
-2. Abra o terminal e clone o repositório:
+   **Windows:**
+   ```bash
+   python -m venv .venv
+   source .venv\Scripts\activate
+   ```
 
-```bash
-git clone https://github.com/lvgalvao/projeto_etl.git
-cd projeto_etl
-```   
+   **macOS/Linux:**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   ```
 
-3. Crie um ambiente virtual:
+4. **Instalar as dependências**:  
 
-```bash
-python -m venv .venv
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. Ative o ambiente virtual:
+5. **Executar o processo ETL**:  
 
-No Windows:
+   Navegue até a pasta `src` e rode o script:
 
-```bash
-source .venv\Scripts\activate
-```
+   ```bash
+   cd src
+   python etl_process.py
+   ```
 
-No macOS e Linux:
+   O script salvará os dados processados nos formatos **CSV** e **Parquet** na pasta `data/output`.
 
-```bash
-source .venv/bin/activate
-```
+---
 
-5. Instale as dependências:
+## Bibliotecas Utilizadas  
 
-```bash
-pip install -r requirements.txt
-```
+1. **Pandas**  
+   - Manipulação de dados tabulares em Python.  
+   - Facilita a leitura e escrita de arquivos CSV e Parquet, além de fornecer operações eficientes para limpeza e transformação dos dados.
 
-6. Navegue até a pasta src:
+   **Instalação:**  
+   ```bash
+   pip install pandas
+   ```
 
-```bash
-cd projeto_etl
-```
+2. **PyArrow**  
+   - Suporta a conversão e manipulação de arquivos no formato **Parquet**, garantindo eficiência em I/O.  
+   - Usado em conjunto com Pandas para leitura e escrita de arquivos Parquet.
 
-7. Execute o script ETL:
+   **Instalação:**  
+   ```bash
+   pip install pyarrow
+   ```
 
-```bash
-python etl_process.py
-```
-O script irá processar os dados do arquivo `vendas.csv` e gerar um novo arquivo `vendas_processadas.csv` na pasta `data/output/`.
+3. **pytest**  
+   - Ferramenta para executar **testes unitários**, essencial para garantir que o código esteja funcionando como esperado.  
+   - Utilizamos pytest para validar:
+     - A extração correta dos dados
+     - A transformação adequada, como preenchimento de valores nulos e cálculo de vendas
+     - O carregamento dos dados tanto em CSV quanto em Parquet
 
-### 5. Próximos Passos
+   **Instalação:**  
+   ```bash
+   pip install pytest
+   ```
 
-- Integrar o projeto com AWS S3 para armazenamento em nuvem
-- Implementar tratamento de erros e logging
-- Criar documentação detalhada das funções
+---
 
-### 6. Testes Unitários
+## Testes Unitários  
 
-Foram implementados testes unitários para garantir a qualidade e o funcionamento correto do código. Os testes estão localizados no arquivo `test/test_etl_process.py` e cobrem as principais funções do processo ETL.
+1. **Objetivo do pytest**:  
+   Garantir que o código ETL funcione conforme o esperado e que futuras alterações não introduzam erros. Os testes cobrem:  
+   - Extração correta dos dados do CSV  
+   - Transformação dos dados com remoção de duplicatas e preenchimento de valores nulos  
+   - Exportação correta para **CSV** e **Parquet**  
 
-Para executar os testes, siga estas etapas:
+2. **Como rodar os testes**:  
+   Certifique-se de estar na pasta raiz do projeto e execute:
 
-1. Certifique-se de estar no diretório raiz do projeto.
+   ```bash
+   PYTHONPATH=. pytest -v
+   ```
 
-2. Execute o seguinte comando:
+   Isso executará todos os testes com saída detalhada. Rodar os testes regularmente garante que o pipeline se mantenha funcional e livre de regressões.
 
-```bash
-PYTHONPATH=. pytest -v
-```
+---
 
-Este comando configura o PYTHONPATH para incluir o diretório atual e executa o pytest com saída detalhada (-v).
+## Próximos Passos  
 
-Os testes verificam:
-- A extração correta de dados de um arquivo CSV
-- A transformação adequada dos dados, incluindo tratamento de valores nulos e cálculos
-- O carregamento correto dos dados em formatos CSV e Parquet
+1. **Integrar o projeto com AWS S3**:  
+   - Automatizar a transferência dos arquivos CSV e Parquet para o S3.
 
-Executar os testes regularmente ajuda a garantir que as alterações no código não introduzam regressões e que todas as funcionalidades continuem operando conforme esperado.
+2. **Implementar tratamento de erros e logging**:  
+   - Melhorar a confiabilidade do processo ETL.
 
-## Pré-requisitos
+3. **Documentar funções com docstrings**:  
+   - Facilitar manutenção e colaboração futura no projeto.
 
-- Python instalado (versão 3.12 ou superior)
-- Biblioteca Pandas instalada (`pip install pandas`)
-- Conta no GitHub
-- Git instalado localmente
+---
 
-## Recursos Adicionais
+## Pré-requisitos  
 
-- [Documentação oficial do Pandas](https://pandas.pydata.org/docs/)
-- [Guia do GitHub para iniciantes](https://docs.github.com/pt/get-started)
+- **Python 3.12+**  
+- **Git e Conta no GitHub**  
+- **Bibliotecas necessárias**:
+  ```bash
+  pip install pandas pyarrow pytest python-dotenv
+  ```
 
-Continuaremos a aprimorar nossas habilidades em manipulação de dados e colaboração em projetos!
+---
+
+## Recursos Adicionais  
+
+- [Documentação do Pandas](https://pandas.pydata.org/docs/)  
+- [Guia do GitHub para iniciantes](https://docs.github.com/pt/get-started)  
+- [Documentação do PyArrow](https://arrow.apache.org/docs/python/)  
+- [Guia de uso do pytest](https://docs.pytest.org/en/latest/)  
