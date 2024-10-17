@@ -5,7 +5,7 @@
 ### Diagrama Geral do Processo ETL  
 
 ```mermaid
-flowchart TD
+flowchart LR
     A[Início] --> B[Leitura dos Dados]
     B --> C[Transformação dos Dados]
     C --> D[Carregamento dos Dados]
@@ -17,7 +17,7 @@ flowchart TD
 ### **Extrair: Leitura dos Dados**  
 
 ```mermaid
-flowchart TD
+flowchart LR
 subgraph Extrair[Etapa de Extração]
     A1[Ler arquivo CSV] --> A2[Gerar DataFrame com Pandas]
     A2 --> A3[Verificar Tipos de Dados]
@@ -30,7 +30,7 @@ end
 ### **Transformar: Limpeza e Manipulação dos Dados**  
 
 ```mermaid
-flowchart TD
+flowchart LR
 subgraph Transformar[Etapa de Transformação]
     B1[Remover Duplicatas] --> B2[Preencher Valores Nulos]
     B2 --> B3[Adicionar Coluna 'Mês']
@@ -43,7 +43,7 @@ end
 ### **Carregar: Exportar os Dados**  
 
 ```mermaid
-flowchart TD
+flowchart LR
 subgraph Carregar[Etapa de Carregamento]
     C1[Preparar Dados Processados] --> C2[Salvar em CSV Processado]
     C2 --> C3[Salvar em Arquivo Parquet]
