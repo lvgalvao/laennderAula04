@@ -23,21 +23,27 @@ def transformar_dados(df):
     
     return df
 
-def carregar_dados(df, caminho_saida):
+def carregar_dados(df, caminho_saida_csv, caminho_saida_parquet):
     print("Carregando dados...")
-    df.to_csv(caminho_saida, index=False)
-    print(f"Dados salvos em: {caminho_saida}")
+    # Salvar em CSV
+    df.to_csv(caminho_saida_csv, index=False)
+    print(f"Dados salvos em CSV: {caminho_saida_csv}")
+    
+    # Salvar em Parquet
+    df.to_parquet(caminho_saida_parquet, index=False)
+    print(f"Dados salvos em Parquet: {caminho_saida_parquet}")
 
 def processo_etl():
     # Definir caminhos
     diretorio_atual = os.path.dirname(os.path.abspath(__file__))
     caminho_entrada = os.path.join(diretorio_atual, '..', 'data', 'input', 'vendas.csv')
-    caminho_saida = os.path.join(diretorio_atual, '..', 'data', 'output', 'vendas_processadas.csv')
+    caminho_saida_csv = os.path.join(diretorio_atual, '..', 'data', 'output', 'vendas_processadas.csv')
+    caminho_saida_parquet = os.path.join(diretorio_atual, '..', 'data', 'output', 'vendas_processadas.parquet')
     
     # Executar ETL
     dados_brutos = extrair_dados(caminho_entrada)
     dados_transformados = transformar_dados(dados_brutos)
-    carregar_dados(dados_transformados, caminho_saida)
+    carregar_dados(dados_transformados, caminho_saida_csv, caminho_saida_parquet)
     
     print("Processo ETL concluído com sucesso!")
 

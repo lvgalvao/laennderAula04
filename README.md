@@ -139,8 +139,30 @@ O script irá processar os dados do arquivo `vendas.csv` e gerar um novo arquivo
 
 - Integrar o projeto com AWS S3 para armazenamento em nuvem
 - Implementar tratamento de erros e logging
-- Adicionar testes unitários
 - Criar documentação detalhada das funções
+
+### 6. Testes Unitários
+
+Foram implementados testes unitários para garantir a qualidade e o funcionamento correto do código. Os testes estão localizados no arquivo `test/test_etl_process.py` e cobrem as principais funções do processo ETL.
+
+Para executar os testes, siga estas etapas:
+
+1. Certifique-se de estar no diretório raiz do projeto.
+
+2. Execute o seguinte comando:
+
+```bash
+PYTHONPATH=. pytest -v
+```
+
+Este comando configura o PYTHONPATH para incluir o diretório atual e executa o pytest com saída detalhada (-v).
+
+Os testes verificam:
+- A extração correta de dados de um arquivo CSV
+- A transformação adequada dos dados, incluindo tratamento de valores nulos e cálculos
+- O carregamento correto dos dados em formatos CSV e Parquet
+
+Executar os testes regularmente ajuda a garantir que as alterações no código não introduzam regressões e que todas as funcionalidades continuem operando conforme esperado.
 
 ## Pré-requisitos
 
