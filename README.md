@@ -3,24 +3,26 @@
 Processo ETL Detalhado:
 
 ```mermaid
-flowchart TD
-    A[Início] --> B[Extrair]
-    B --> C[Transformar]
-    C --> D[Carregar]
-    D --> E[Fim]
-    
-    subgraph Extrair
-    B1[Ler arquivo CSV] --> B2[Criar DataFrame Pandas]
-    end
-    
-    subgraph Transformar
-    C1[Remover Duplicatas] --> C2[Tratar Valores Nulos]
-    C2 --> C3[Adicionar Coluna Mês]
-    C3 --> C4[Calcular Total de Vendas por Produto]
-    end
-    
-    subgraph Carregar
-    D1[Preparar Dados para Saída] --> D2[Salvar como CSV Processado]
+flowchart LR
+    subgraph Pipeline[Pipeline ETL]
+        A[Início] --> Extrair
+        Extrair --> Transformar
+        Transformar --> Carregar
+        Carregar --> E[Fim]
+        
+        subgraph Extrair[Extrair]
+            B1[Ler arquivo CSV] --> B2[Criar DataFrame Pandas]
+        end
+        
+        subgraph Transformar[Transformar]
+            C1[Remover Duplicatas] --> C2[Tratar Valores Nulos]
+            C2 --> C3[Adicionar Coluna Mês]
+            C3 --> C4[Calcular Total de Vendas por Produto]
+        end
+        
+        subgraph Carregar[Carregar]
+            D1[Preparar Dados para Saída] --> D2[Salvar como CSV Processado]
+        end
     end
 ```
 
